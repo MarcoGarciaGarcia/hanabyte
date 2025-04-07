@@ -76,8 +76,8 @@ const EquipmentSection: React.FC = () => {
                     <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">
                       {miembro.nombre}
                     </h3>
-                    <p className="text-sm sm:text-base text-gray-500 mt-1">
-                      {miembro.cargo}
+                    <p className="text-sm sm:text-base text-gray-500 ml-2">
+                      - {miembro.cargo}
                     </p>
                   </CardHeader>
                   <CardBody className="flex-grow">

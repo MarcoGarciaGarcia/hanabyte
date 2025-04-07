@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { registerUser, loginUser } from "../services/login";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -28,8 +29,12 @@ const AuthForm = () => {
       }
 
       try {
-        // await loginUser(email, password);
-        router.push("/dashboard");
+        const response = await loginUser(email, password);
+        if (response) {
+          router.push("/platform/admin");
+        } else {
+          setError("Error al iniciar sesión. Por favor intenta nuevamente.");
+        }
       } catch (err) {
         setError(
           "Credenciales incorrectas. Por favor intenta nuevamente." + err
@@ -38,7 +43,6 @@ const AuthForm = () => {
         setLoading(false);
       }
     } else {
-      // Lógica de registro
       if (!name || !email || !password) {
         setError("Por favor completa todos los campos");
         setLoading(false);
@@ -46,8 +50,12 @@ const AuthForm = () => {
       }
 
       try {
-        // await registerUser(name, email, password);
-        router.push("/dashboard");
+        const response = await registerUser(name, email, password);
+        if (response) {
+          window.location.reload();
+        } else {
+          setError("Error al registrarte. Por favor intenta nuevamente.");
+        }
       } catch (err) {
         setError("Error al registrar. Por favor intenta nuevamente." + err);
       } finally {

@@ -1,28 +1,64 @@
-'use client';
+"use client";
 import { Button, Input, Textarea } from "@heroui/react";
 import { useState } from "react";
 
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [NameError, setNameError] = useState("");
   const [message, setMessage] = useState("");
   const [emailError, setEmailError] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateEmail = (email: string) => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(email);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateName = (name: string) => {
+    const re = /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/;
+    return re.test(name.trim()) && name.trim().length >= 2;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (!validateEmail(email)) {
       setEmailError("Por favor, ingrese un correo electrónico válido.");
       return;
+    } else if (!validateName(name)) {
+      setNameError("Por favor, ingrese un nombre válido.");
+      return;
     }
 
+    setNameError("");
+
     setEmailError("");
-    setIsSubmitted(true);
+
+    try {
+      const res = await fetch("https://backend.remmi.space/api/enviarCorreo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, name: name, asunto: message }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Error al enviar el formulario");
+      }
+
+      console.log("Formulario enviado:", { email, message });
+
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error("Hubo un problema con la solicitud:", err);
+    }
+
+    setIsLoading(false);
+
     console.log("Formulario enviado:", { email, message });
   };
 
@@ -58,11 +94,36 @@ const RegisterForm = () => {
                   ¡Registro exitoso!
                 </h2>
                 <p className="text-gray-600 sm:text-lg">
-                  Gracias por registrarte. Nos pondremos en contacto contigo pronto.
+                  Gracias por registrarte. Nos pondremos en contacto contigo
+                  pronto.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm sm:text-base font-medium text-gray-700 mb-1"
+                  >
+                    Nombre Completo
+                  </label>
+                  <Input
+                    variant="underlined"
+                    required
+                    type="name"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Jon Doe"
+                    className={`w-full px-4 py-2 text-sm sm:text-base border-b-2 focus:border-[#379aa3] transition ${
+                      NameError ? "border-red-500" : "border-gray-300"
+                    }`}
+                  />
+                  {NameError && (
+                    <p className="mt-1 text-sm text-red-500">{NameError}</p>
+                  )}
+                </div>
+
                 <div>
                   <label
                     htmlFor="email"
@@ -108,6 +169,7 @@ const RegisterForm = () => {
                   <Button
                     type="submit"
                     variant="solid"
+                    isLoading={isLoading}
                     className="w-full py-3 sm:py-4 bg-[#379aa3] hover:bg-[#307e8a] text-white font-medium rounded-lg transition text-sm sm:text-base"
                   >
                     Enviar Registro

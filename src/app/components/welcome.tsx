@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const WelcomeSection: React.FC = () => {
   return (
     <section className="welcome-section w-screen h-screen flex p-20">
-      <div className="w-[50%] grid justify-center items-center justify-items-start">
+      <div className="w-full lg:w-[50%] grid justify-center items-center justify-items-start">
         <motion.div initial={{ x: "-200%" }} animate={{ x: "calc(0%)" }}>
           <h1 className="text-[#379aa3] text-7xl font-bold mb-4">
             HanaByte 花
@@ -19,7 +19,7 @@ const WelcomeSection: React.FC = () => {
           </Button>
         </motion.div>
       </div>
-      <div className="w-[50%] flex justify-center items-center justify-items-start">
+      <div className="w-0 lg:w-[50%] flex justify-center items-center justify-items-start">
         <Image
           src="/1.jpg"
           width={350}

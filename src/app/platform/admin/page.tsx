@@ -1,16 +1,29 @@
 "use client";
-import { Button, Input, Textarea, Card, CardHeader, CardBody } from "@heroui/react";
+import { saveService } from "@/app/services/login";
+import {
+  Button,
+  Input,
+  Textarea,
+  Card,
+  CardHeader,
+  CardBody,
+} from "@heroui/react";
 import { motion } from "framer-motion";
+import { Router } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const ServicesDashboard = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [features, setFeatures] = useState<string[]>([]);
   const [currentFeature, setCurrentFeature] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0.0);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleAddFeature = () => {
     if (currentFeature.trim() !== "") {
@@ -31,17 +44,25 @@ const ServicesDashboard = () => {
 
     try {
       // Aquí iría la llamada a tu API para guardar el servicio
-      // await saveService({ title, description, features, price });
-      
+      const response = await saveService(title, description, features, price);
+
+      if (response) {
+        Swal.fire({
+          title: "¡Registro exitoso!",
+          icon: "success",
+          draggable: true,
+        });
+      }
+
       // Simulando un retraso de red
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       setSuccess(true);
       setTitle("");
       setDescription("");
       setFeatures([]);
-      setPrice("");
-      
+      setPrice(0.0);
+
       // Ocultar el mensaje de éxito después de 3 segundos
       setTimeout(() => setSuccess(false), 3000);
     } catch (error) {
@@ -89,7 +110,10 @@ const ServicesDashboard = () => {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="title"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Título del Servicio
                 </label>
                 <Input
@@ -104,7 +128,10 @@ const ServicesDashboard = () => {
               </div>
 
               <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="description"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Descripción
                 </label>
                 <Textarea
@@ -119,7 +146,10 @@ const ServicesDashboard = () => {
               </div>
 
               <div>
-                <label htmlFor="features" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="features"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Características
                 </label>
                 <div className="flex gap-2 mb-2">
@@ -139,7 +169,7 @@ const ServicesDashboard = () => {
                     Añadir
                   </Button>
                 </div>
-                
+
                 {features.length > 0 && (
                   <ul className="space-y-2 mt-2">
                     {features.map((feature, index) => (
@@ -165,14 +195,17 @@ const ServicesDashboard = () => {
               </div>
 
               <div>
-                <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="price"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Precio
                 </label>
                 <Input
                   id="price"
                   type="text"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
+                  value={price.toString()}
+                  onChange={(e) => setPrice(Number(e.target.value))}
                   placeholder="Ej: $5000"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#379aa3] focus:border-[#379aa3] transition"
                   required
@@ -186,12 +219,38 @@ const ServicesDashboard = () => {
                   className="w-full py-3 bg-[#379aa3] hover:bg-[#307e8a] text-white font-medium rounded-lg transition flex justify-center"
                 >
                   {loading ? (
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                   ) : null}
                   {loading ? "Registrando servicio..." : "Registrar Servicio"}
+                </Button>
+                <Button
+                  onPress={() => {
+                    router.push("/platform");
+                  }}
+                  type="button"
+                  variant="bordered"
+                  className="border-1 border-[#379aa3] text-[#379aa3] font-semibold rounded-md w-full mt-4 p-2 justify-center"
+                >
+                  Salir
                 </Button>
               </div>
             </form>
@@ -199,7 +258,10 @@ const ServicesDashboard = () => {
         </Card>
 
         <div className="mt-8 text-center text-xs text-gray-500">
-          <p>© {new Date().getFullYear()} HanaByte. Todos los derechos reservados.</p>
+          <p>
+            © {new Date().getFullYear()} HanaByte. Todos los derechos
+            reservados.
+          </p>
         </div>
       </motion.div>
     </div>
