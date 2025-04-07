@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Header from "./components/header";
 import WelcomeSection from "./components/welcome";
 import AboutSection from "./components/about";
