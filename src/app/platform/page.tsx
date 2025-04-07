@@ -31,7 +31,9 @@ const AuthForm = () => {
         // await loginUser(email, password);
         router.push("/dashboard");
       } catch (err) {
-        setError("Credenciales incorrectas. Por favor intenta nuevamente.");
+        setError(
+          "Credenciales incorrectas. Por favor intenta nuevamente." + err
+        );
       } finally {
         setLoading(false);
       }
@@ -47,7 +49,7 @@ const AuthForm = () => {
         // await registerUser(name, email, password);
         router.push("/dashboard");
       } catch (err) {
-        setError("Error al registrar. Por favor intenta nuevamente.");
+        setError("Error al registrar. Por favor intenta nuevamente." + err);
       } finally {
         setLoading(false);
       }
@@ -73,7 +75,9 @@ const AuthForm = () => {
                 HanaByte <span className="ml-2">花</span>
               </h1>
               <p className="text-[#daf3f3] mt-2">
-                {isLogin ? "Inicia sesión en tu cuenta" : "Crea una nueva cuenta"}
+                {isLogin
+                  ? "Inicia sesión en tu cuenta"
+                  : "Crea una nueva cuenta"}
               </p>
             </motion.div>
           </div>
@@ -95,7 +99,10 @@ const AuthForm = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Nombre Completo
                 </label>
                 <Input
@@ -110,7 +117,10 @@ const AuthForm = () => {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Correo Electrónico
               </label>
               <Input
@@ -125,11 +135,17 @@ const AuthForm = () => {
 
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Contraseña
                 </label>
                 {isLogin && (
-                  <Link href="/forgot-password" className="text-xs text-[#379aa3] hover:text-[#307e8a]">
+                  <Link
+                    href="/forgot-password"
+                    className="text-xs text-[#379aa3] hover:text-[#307e8a]"
+                  >
                     ¿Olvidaste tu contraseña?
                   </Link>
                 )}
@@ -157,7 +173,10 @@ const AuthForm = () => {
                   type="checkbox"
                   className="h-4 w-4 text-[#379aa3] focus:ring-[#379aa3] border-gray-300 rounded"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-gray-700"
+                >
                   Recordar mi sesión
                 </label>
               </div>
@@ -169,27 +188,41 @@ const AuthForm = () => {
               className="w-full py-3 bg-[#379aa3] hover:bg-[#307e8a] text-white font-medium rounded-lg transition flex justify-center"
             >
               {loading ? (
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <svg
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
                 </svg>
               ) : null}
-              {loading 
-                ? isLogin 
-                  ? "Iniciando sesión..." 
+              {loading
+                ? isLogin
+                  ? "Iniciando sesión..."
                   : "Registrando..."
-                : isLogin 
-                  ? "Iniciar sesión" 
-                  : "Registrarse"}
+                : isLogin
+                ? "Iniciar sesión"
+                : "Registrarse"}
             </Button>
           </form>
 
           <div className="bg-gray-50 px-6 py-4 text-center">
             <p className="text-sm text-gray-600">
-              {isLogin 
-                ? "¿No tienes una cuenta? " 
-                : "¿Ya tienes una cuenta? "}
-              <button 
+              {isLogin ? "¿No tienes una cuenta? " : "¿Ya tienes una cuenta? "}
+              <button
                 onClick={() => setIsLogin(!isLogin)}
                 className="font-medium text-[#379aa3] hover:text-[#307e8a] focus:outline-none"
               >
@@ -200,7 +233,10 @@ const AuthForm = () => {
         </div>
 
         <div className="mt-8 text-center text-xs text-gray-500">
-          <p>© {new Date().getFullYear()} HanaByte. Todos los derechos reservados.</p>
+          <p>
+            © {new Date().getFullYear()} HanaByte. Todos los derechos
+            reservados.
+          </p>
         </div>
       </motion.div>
     </div>
