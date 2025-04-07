@@ -9,7 +9,6 @@ import {
   CardBody,
 } from "@heroui/react";
 import { motion } from "framer-motion";
-import { Router } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Swal from "sweetalert2";
