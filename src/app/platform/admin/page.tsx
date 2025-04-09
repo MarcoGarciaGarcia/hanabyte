@@ -7,7 +7,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  PressEvent,
 } from "@heroui/react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
