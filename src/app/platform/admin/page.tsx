@@ -72,7 +72,7 @@ const ServicesDashboard = () => {
     }
   };
 
-  function handleSalir(e: PressEvent): void {
+  function handleSalir(): void {
     sessionStorage.removeItem("login");
     router.push("/platform");
   }
