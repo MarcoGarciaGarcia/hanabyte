@@ -31,6 +31,7 @@ const EquipmentSection: React.FC = () => {
 
   return (
     <section
+      id="conocenos"
       ref={sectionRef}
       className="w-full py-10 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20"
     >

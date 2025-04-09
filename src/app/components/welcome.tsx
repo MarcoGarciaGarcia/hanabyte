@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const WelcomeSection: React.FC = () => {
   return (
-    <section className="welcome-section w-screen h-screen flex p-20">
+    <section id="inicio" className="welcome-section w-screen h-screen flex p-20">
       <div className="w-full lg:w-[50%] grid justify-center items-center justify-items-start">
         <motion.div initial={{ x: "-200%" }} animate={{ x: "calc(0%)" }}>
           <h1 className="text-[#379aa3] text-7xl font-bold mb-4">
@@ -15,7 +15,7 @@ const WelcomeSection: React.FC = () => {
             <br></br>y diseño natural.
           </p>
           <Button className="bg-[#379aa3] rounded-md text-white h-12">
-            <Link className="font-semibold">Comienza tu proyecto</Link>
+            <Link className="font-semibold" href="/#form">Comienza tu proyecto</Link>
           </Button>
         </motion.div>
       </div>

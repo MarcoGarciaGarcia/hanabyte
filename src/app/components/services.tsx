@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 
 interface Servicio {
   servicio: string;
-  description: string;
+  descripcion: string;
   precio: number;
   caracteristicas: string[];
 }
@@ -54,7 +54,7 @@ export function ServicesSection() {
   const demoServices: Servicio[] = [
     {
       servicio: "Desarrollo de Landing Pages",
-      description: "Soluciones personalizadas que hacen crecer tu negocio.",
+      descripcion: "Soluciones personalizadas que hacen crecer tu negocio.",
       precio: 3500,
       caracteristicas: [
         "Diseño responsivo",
@@ -70,6 +70,7 @@ export function ServicesSection() {
 
   return (
     <section
+      id="productos"
       ref={sectionRef}
       className="w-full py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 lg:px-12"
     >
@@ -111,7 +112,7 @@ export function ServicesSection() {
                         {service.servicio}
                       </h2>
                       <p className="text-sm sm:text-base text-gray-500 mt-2 font-light text-center">
-                        {service.description}
+                        {service.descripcion}
                       </p>
                     </div>
                   </CardHeader>

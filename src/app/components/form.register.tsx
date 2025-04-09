@@ -63,7 +63,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
+    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6" id="form">
       <div className="w-full max-w-6xl bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="flex flex-col lg:flex-row">
           {/* Sección del formulario - Primero en móvil */}

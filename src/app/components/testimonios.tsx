@@ -47,6 +47,7 @@ export function AnimatedTestimonialsSection() {
 
   return (
     <section
+      id="clientes"
       ref={sectionRef}
       className="w-full py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20"
     >

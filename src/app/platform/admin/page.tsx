@@ -7,6 +7,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  PressEvent,
 } from "@heroui/react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -70,6 +71,11 @@ const ServicesDashboard = () => {
       setLoading(false);
     }
   };
+
+  function handleSalir(e: PressEvent): void {
+    sessionStorage.removeItem("login");
+    router.push("/platform");
+  }
 
   return (
     <div className="min-h-screen bg-[#f1faf9] p-4 sm:p-6 md:p-8">
@@ -242,9 +248,7 @@ const ServicesDashboard = () => {
                   {loading ? "Registrando servicio..." : "Registrar Servicio"}
                 </Button>
                 <Button
-                  onPress={() => {
-                    router.push("/platform");
-                  }}
+                  onPress={handleSalir}
                   type="button"
                   variant="bordered"
                   className="border-1 border-[#379aa3] text-[#379aa3] font-semibold rounded-md w-full mt-4 p-2 justify-center"
