@@ -94,7 +94,7 @@ export function Footer() {
             className="flex flex-col items-center md:items-start"
           >
             <h3 className="text-lg font-semibold mb-4">Enlaces Rápidos</h3>
-            <ul className="space-y-2 text-center md:text-left">
+            {/* <ul className="space-y-2 text-center md:text-left">
               <li>
                 <Link
                   href="/servicios"
@@ -135,7 +135,7 @@ export function Footer() {
                   Contacto
                 </Link>
               </li>
-            </ul>
+            </ul> */}
           </motion.div>
 
           {/* Contacto */}
